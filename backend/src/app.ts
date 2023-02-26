@@ -1,7 +1,7 @@
 import express from 'express';
-import e, { Application } from 'express';
+import { Application } from 'express';
 
-const chats = require('../data/data');
+const chats = require('../data/data'); //imported chats
 
 const app: Application = express();
 
