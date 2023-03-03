@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
+import { generateToken } from '../config/generateToken';
 import User from '../models/userModel';
 
 interface UserType {
@@ -37,7 +38,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
       name: user.name,
       email: user.email,
       pic: user.pic,
-      token: generateToken(user._id),
+      token: generateToken(user._id.toString()),
     });
   } else {
     res.status(400);
@@ -45,4 +46,21 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-module.exports = { registerUser };
+const authUser = asyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (user && (await user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      pic: user.pic,
+      token: generateToken(user._id.toString()),
+    });
+  } else {
+    res.status(401);
+    throw new Error('Invalid Email or Password');
+  }
+});
+
+module.exports = { registerUser, authUser };
