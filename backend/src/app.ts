@@ -1,6 +1,7 @@
 import express from 'express';
 import { Application } from 'express';
 import { errorHandler, notFound } from '../middleware/errorMiddleware';
+import chatRoutes from '../routes/chatRoutes';
 const chats = require('../data/data'); //imported chats
 
 const userRoutes = require('../routes/userRoutes');

@@ -1,6 +1,18 @@
 import mongoose from 'mongoose';
 const bcrypt = require('bcryptjs');
 
+export interface UserType {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  IsAdmin: boolean;
+  pic: string;
+  matchPassword: (pw: string) => Promise<boolean>;
+}
+
+export type UserDoc = UserType & Document;
+
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
