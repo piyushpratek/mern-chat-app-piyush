@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 import User from '../models/userModel';
 import asyncHandler from 'express-async-handler';
-import { Request, Response } from 'express';
+import { Response } from 'express';
+import { RequestAuth } from '../types';
 
 export const protect = asyncHandler(
-  async (req: Request, res: Response, next) => {
+  async (req: RequestAuth, res: Response, next) => {
     let token;
 
     if (
@@ -17,8 +18,8 @@ export const protect = asyncHandler(
         // decodes token id
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        req.user = await User.findById(decoded.id).select('-password');
+        //fix later any
+        req.user = await (User.findById(decoded.id).select('-password') as any);
         next();
       } catch (error: any) {
         res.status(401);
