@@ -79,6 +79,7 @@ export const allUsers = asyncHandler(
     const filter = req.query?.search ? searchFilter : {};
     // console.log('keyword?', keyword);
 
+    //$ne=not equal
     const users = await User.find(filter).find({
       _id: { $ne: req.user?._id },
     });

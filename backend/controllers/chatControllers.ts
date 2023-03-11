@@ -17,6 +17,7 @@ export const accessChat = asyncHandler(
     var isChat = await Chat.find({
       isGroupChat: false,
       //[Todo] improve query with $in [sahil]
+      // $eq=equal
       $and: [
         { users: { $elemMatch: { $eq: req.user?._id } } },
         { users: { $elemMatch: { $eq: userId } } },
