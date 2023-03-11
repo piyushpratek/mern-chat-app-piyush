@@ -8,8 +8,8 @@ export default {
     try {
       mongoose.set('strictQuery', true);
       const conn = await mongoose.connect(MONGO_URI);
-      if (process.env.NODE_ENV !== 'prod') {
-        logger.success(`Mongo Db Connected: ${conn.connection.host}`);
+      if (process.env.NODE_ENV !== 'test') {
+        logger.success(`MONGO DB CONNECTED: ${conn.connection.host}`);
       }
     } catch (error) {
       logger.error(`Error: ${(error as Error).message}`);
@@ -20,18 +20,3 @@ export default {
     await mongoose.disconnect();
   },
 };
-
-// const connectDB = async (): Promise<void> => {
-//   try {
-//     mongoose.set('strictQuery', true);
-//     const conn = await mongoose.connect(process.env.MONGO_URI);
-//   logger.success(`MongoDB Connected: ${conn.connection.host}`)
-
-//   }
-//    catch (error:any) {
-//     logger.error(`Error: ${error.message}`)
-//     process.exit()
-//    }
-// };
-
-// module.exports=connectDB

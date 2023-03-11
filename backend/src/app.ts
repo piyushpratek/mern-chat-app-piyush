@@ -3,7 +3,7 @@ import { Application } from 'express';
 import { errorHandler, notFound } from '../middleware/errorMiddleware';
 import chatRoutes from '../routes/chatRoutes';
 import userRoutes from '../routes/userRoutes';
-const chats = require('../data/data'); //imported chats
+// const chats = require('../data/data'); //imported chats
 
 const app: Application = express();
 

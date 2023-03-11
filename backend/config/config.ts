@@ -1,15 +1,25 @@
 import dotenv from 'dotenv';
 import logger from './logger';
 
-let envPath = '';
+// NOTE: Always check if `NODE_ENV` before anything else
+if (typeof process.env.NODE_ENV === 'undefined') {
+  logger.error(
+    'Please define Your `NODE_ENV` variable using `cross-env` in package.json file'
+  );
+  process.exit(1);
+}
+
+logger.success('NODE_ENV:', process.env.NODE_ENV);
+
+let envPath: string | undefined;
 
 if (process.env.NODE_ENV === 'production') {
   envPath = '.env';
 }
 if (process.env.NODE_ENV === 'development') {
-  envPath = '.env';
+  envPath = '.env.development';
 }
-if (envPath === '') {
+if (!envPath) {
   logger.error('Please use a valid value of NODE_ENV variable.');
   process.exit(1);
 }
@@ -21,10 +31,6 @@ if (typeof process.env.MONGO_URI === 'undefined') {
 }
 if (typeof process.env.JWT_SECRET === 'undefined') {
   logger.error('Please define JWT_SECRET in your .env file.');
-  process.exit(1);
-}
-if (typeof process.env.NODE_ENV === 'undefined') {
-  logger.error('Please Define Your NODE_ENV in your .env file.');
   process.exit(1);
 }
 
