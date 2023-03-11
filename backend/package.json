@@ -21,8 +21,10 @@
     "mongoose": "^6.10.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.14.1",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",

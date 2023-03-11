@@ -9,20 +9,25 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV === 'development') {
   envPath = '.env';
 }
-
 if (envPath === '') {
   logger.error('Please use a valid value of NODE_ENV variable.');
-  throw new Error();
+  process.exit(1);
 }
 
 dotenv.config({ path: envPath });
 if (typeof process.env.MONGO_URI === 'undefined') {
-  throw new Error('Please define MONGO_URI in your .env file.');
+  logger.error('Please define MONGO_URI in your .env file.');
+  process.exit(1);
+}
+if (typeof process.env.JWT_SECRET === 'undefined') {
+  logger.error('Please define JWT_SECRET in your .env file.');
+  process.exit(1);
 }
 if (typeof process.env.NODE_ENV === 'undefined') {
-  throw new Error('Please Define Your NODE_ENV in your .env file.');
+  logger.error('Please Define Your NODE_ENV in your .env file.');
+  process.exit(1);
 }
 
 export const MONGO_URI = process.env.MONGO_URI;
-
+export const JWT_SECRET = process.env.JWT_SECRET;
 export const NODE_ENV = process.env.NODE_ENV;

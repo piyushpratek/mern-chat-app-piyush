@@ -11,8 +11,7 @@ export const accessChat = asyncHandler(
 
     if (!userId) {
       console.log('userId param not sent with request');
-      res.sendStatus(400);
-      return;
+      return void res.sendStatus(400);
     }
 
     var isChat = await Chat.find({

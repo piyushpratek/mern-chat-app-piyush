@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
 export interface UserType {
   _id: string;
@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema<UserType>(
   }
 );
 
-userSchema.methods.matchPassword = async function (enteredPassword: String) {
+userSchema.methods.matchPassword = async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
