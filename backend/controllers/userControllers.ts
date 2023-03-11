@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { generateToken } from '../config/generateToken';
+import { HttpStatus } from '../http-status.enum';
 import User, { UserType } from '../models/userModel';
 import { RequestAuth } from '../types';
 
@@ -9,14 +10,14 @@ export const registerUser = asyncHandler(
     const { name, email, password, pic } = req.body as UserType;
 
     if (!name || !email || !password) {
-      res.status(400);
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error('Please Enter all the fields');
     }
 
     const userExits = await User.findOne({ email });
 
     if (userExits) {
-      res.status(400);
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error('User Already Exits');
     }
 
@@ -28,7 +29,7 @@ export const registerUser = asyncHandler(
     });
 
     if (user) {
-      res.status(201).json({
+      res.status(HttpStatus.CREATED).json({
         _id: user._id,
         name: user.name,
         email: user.email,
@@ -36,7 +37,7 @@ export const registerUser = asyncHandler(
         token: generateToken(user._id.toString()),
       });
     } else {
-      res.status(400);
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error('Failed To Create the User');
     }
   }
@@ -47,7 +48,7 @@ export const authUser = asyncHandler(
     const { email, password } = req.body;
     const user: UserType | null = await User.findOne({ email });
     if (!user) {
-      res.status(401);
+      res.status(HttpStatus.UNAUTHORIZED);
       return;
     }
     if (user && (await user.matchPassword(password))) {
@@ -59,7 +60,7 @@ export const authUser = asyncHandler(
         token: generateToken(user._id.toString()),
       });
     } else {
-      res.status(401);
+      res.status(HttpStatus.UNAUTHORIZED);
       throw new Error('Invalid Email or Password');
     }
   }

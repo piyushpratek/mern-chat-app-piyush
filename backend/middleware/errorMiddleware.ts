@@ -5,6 +5,7 @@ import type {
   ErrorRequestHandler,
 } from 'express';
 import { NODE_ENV } from '../config/config';
+import { HttpStatus } from '../http-status.enum';
 
 export const notFound = (
   req: Request,
@@ -12,7 +13,7 @@ export const notFound = (
   next: NextFunction
 ): void => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
-  res.status(404);
+  res.status(HttpStatus.NOT_FOUND);
   next(error);
 };
 
@@ -22,7 +23,10 @@ export const errorHandler: ErrorRequestHandler = (
   res: Response,
   next
 ): void => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  const statusCode =
+    res.statusCode === HttpStatus.OK
+      ? HttpStatus.INTERNAL_SERVER_ERROR
+      : res.statusCode;
   res.status(statusCode);
   res.json({
     message: err.message,

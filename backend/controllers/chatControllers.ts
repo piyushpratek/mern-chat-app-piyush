@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel';
 import Chat from '../models/chatModels';
 import { RequestAuth } from '../types';
+import { HttpStatus } from '../http-status.enum';
 
 export const accessChat = asyncHandler(
   async (req: RequestAuth, res: Response) => {
@@ -44,9 +45,9 @@ export const accessChat = asyncHandler(
           'users',
           '-password'
         );
-        res.status(200).send(FullChat);
+        res.status(HttpStatus.OK).send(FullChat);
       } catch (error: any) {
-        res.status(400);
+        res.status(HttpStatus.BAD_REQUEST);
         throw new Error(error.message);
       }
     }
@@ -66,7 +67,7 @@ export const fetchChats = asyncHandler(
             path: 'latestMessage.sender',
             select: 'name pic email',
           });
-          res.status(200).send(results);
+          res.status(HttpStatus.OK).send(results);
         });
     } catch (error: any) {
       res.send(400);
@@ -74,18 +75,21 @@ export const fetchChats = asyncHandler(
     }
   }
 );
-//fix later any
 export const createGroupChat = asyncHandler(
-  async (req: RequestAuth, res: any) => {
+  async (req: RequestAuth, res: Response) => {
     if (!req.body.users || !req.body.name) {
-      return res.status(400).send({ message: 'Please Fill all the fields' });
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .send({ message: 'Please Fill all the fields' });
+      return;
     }
     var users = JSON.parse(req.body.users);
 
     if (users.length < 2) {
-      return res
-        .status(400)
+      res
+        .status(HttpStatus.BAD_REQUEST)
         .send('More than 2 uers are required to form a group chat');
+      return;
     }
     users.push(req.user);
 
@@ -100,9 +104,9 @@ export const createGroupChat = asyncHandler(
         .populate('users', '-password')
         .populate('groupAdmin', '-password');
 
-      res.status(200).json(fullGroupChat);
+      res.status(HttpStatus.OK).json(fullGroupChat);
     } catch (error: any) {
-      res.status(400);
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error(error.message);
     }
   }

@@ -13,7 +13,7 @@ export interface UserType {
 
 export type UserDoc = UserType & Document;
 
-const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema<UserType>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -41,6 +41,6 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model<UserType>('User', userSchema);
 
 export default User;
