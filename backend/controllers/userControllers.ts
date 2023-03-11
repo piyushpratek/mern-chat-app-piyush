@@ -69,15 +69,15 @@ export const authUser = asyncHandler(
 // to take a request from our api we use params but in this case we use query and . then name of the query
 export const allUsers = asyncHandler(
   async (req: RequestAuth, res: Response) => {
-    const keyword = req.query.search
-      ? // console.log('keyword?', keyword);
-        {
-          $or: [
-            { name: { $regex: req.query.search, $options: 'i' } },
-            { email: { $regex: req.query.search, $options: 'i' } },
-          ],
-        }
-      : {};
+    const searchFilter = {
+      $or: [
+        { name: { $regex: req.query.search, $options: 'i' } },
+        { email: { $regex: req.query.search, $options: 'i' } },
+      ],
+    };
+
+    const keyword = req.query.search ? searchFilter : {};
+    // console.log('keyword?', keyword);
 
     const users = await User.find(keyword).find({
       _id: { $ne: req.user?._id },
