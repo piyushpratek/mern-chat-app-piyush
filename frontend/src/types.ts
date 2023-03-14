@@ -2,14 +2,13 @@ export type ContextProps = {
   selectedChat: unknown;
   setSelectedChat: unknown;
   user: Partial<UserType>;
-  setUser: React.Dispatch<React.SetStateAction<Partial<UserType>>>;
+  setUser: React.Dispatch<React.SetStateAction<Partial<UserType> | undefined>>;
   notification: unknown;
   setNotification: unknown;
   chats: Array<ChatType>;
-  setChats: React.Dispatch<
-    React.SetStateAction<Partial<Array<ChatType | undefined>> | undefined>
-  >;
+  setChats: React.Dispatch<React.SetStateAction<Array<ChatType> | undefined>>;
 };
+
 export type UserType = {
   _id: string;
   name: string;
