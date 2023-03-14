@@ -4,13 +4,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import ChatProvider from './Context/chatProvider';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <ChatProvider>
     <Router>
       <ChakraProvider>
         <App />
       </ChakraProvider>
     </Router>
-  </React.StrictMode>
+  </ChatProvider>
+  // </React.StrictMode>
 );
