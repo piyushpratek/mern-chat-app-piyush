@@ -5,7 +5,7 @@ import { ChatType, ContextProps, UserType } from '../types';
 const ChatContext = createContext<Partial<ContextProps>>({});
 
 const ChatProvider = ({ children }: any) => {
-  const [selectedChat, setSelectedChat] = useState();
+  const [selectedChat, setSelectedChat] = useState<Partial<ChatType>>();
   const [user, setUser] = useState<Partial<UserType>>();
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState<Array<ChatType>>();

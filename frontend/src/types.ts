@@ -1,6 +1,9 @@
+//Todo- update types for notification,setnotification
 export type ContextProps = {
-  selectedChat: unknown;
-  setSelectedChat: unknown;
+  selectedChat: Partial<ChatType>;
+  setSelectedChat: React.Dispatch<
+    React.SetStateAction<Partial<ChatType> | undefined>
+  >;
   user: Partial<UserType>;
   setUser: React.Dispatch<React.SetStateAction<Partial<UserType> | undefined>>;
   notification: unknown;
