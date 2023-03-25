@@ -9,10 +9,19 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Login from '../components/authentication/Login';
 import Signup from '../components/authentication/Signup';
 
 const Homepage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('userInfo') || '{}');
+
+    if (user) navigate('/chats');
+  }, [navigate]);
   return (
     <Container maxW='xl' centerContent>
       <Flex

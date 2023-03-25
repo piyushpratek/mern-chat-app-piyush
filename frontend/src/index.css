@@ -1,0 +1,17 @@
+.label {
+  text-align: end;
+  /* margin-right: 15px; */
+}
+.count {
+  padding: 1px 4px;
+  position: absolute;
+  top: -3px;
+  right: 0;
+  font-size: 7px;
+  background: red;
+  color: white;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

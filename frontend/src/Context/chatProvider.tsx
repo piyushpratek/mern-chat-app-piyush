@@ -10,14 +10,17 @@ const ChatProvider = ({ children }: any) => {
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState<Array<ChatType>>();
 
-  const navigate = useNavigate();
+  // fix this error later
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
     setUser(userInfo);
 
-    if (!userInfo) navigate('/');
-  }, [navigate]);
+    if (!userInfo) {
+      navigate('/');
+    }
+  }, []);
   return (
     <ChatContext.Provider
       value={{
