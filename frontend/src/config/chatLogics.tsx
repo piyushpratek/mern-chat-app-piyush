@@ -1,3 +1,5 @@
+import { UserPublicType, UserType } from '../types';
+
 export const isSameSenderMargin = (
   messages: string | any[],
   m: { sender: { _id: any } },
@@ -56,13 +58,7 @@ export const isSameUser = (
   return i > 0 && messages[i - 1].sender._id === m.sender._id;
 };
 
-export const getSender = (
-  loggedUser: { _id: any },
-  users: {
-    [x: string]: any;
-    name: any;
-  }[]
-) => {
+export const getSender = (loggedUser: Partial<UserType>, users: UserType[]) => {
   return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
 };
 

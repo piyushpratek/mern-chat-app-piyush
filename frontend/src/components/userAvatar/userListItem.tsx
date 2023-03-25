@@ -1,12 +1,14 @@
-import { Box, Text } from '@chakra-ui/react';
-import { ChatState } from '../../Context/chatProvider';
+import { Avatar, Box, Text } from '@chakra-ui/react';
+import { UserPublicType } from '../../types';
 
-const UserListItem = ({ handleFunction }) => {
-  const { user } = ChatState();
-
+type UserListItemProps = {
+  handleFunction: Function;
+  user: Partial<UserPublicType>;
+};
+const UserListItem = ({ handleFunction, user }: UserListItemProps) => {
   return (
     <Box
-      onClick={handleFunction}
+      onClick={handleFunction as any}
       cursor='pointer'
       bg='#E8E8E8'
       _hover={{

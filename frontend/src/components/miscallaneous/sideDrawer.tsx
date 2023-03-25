@@ -29,12 +29,15 @@ import ChatLoading from '../chatLoading';
 import ProfileModal from './profileModal';
 import UserListItem from '../userAvatar/userListItem';
 import BadgeText from '../BadgeText';
+import { UserType } from '../../types';
 
 const SideDrawer = () => {
-  const [search, setSearch] = useState<String>('');
-  const [searchResult, setSearchResult] = useState([]);
-  const [loading, setLoading] = useState<Boolean>(false);
-  const [loadingChat, setLoadingChat] = useState<Boolean>(false);
+  const [search, setSearch] = useState<string>('');
+  const [searchResult, setSearchResult] = useState<Array<Partial<UserType>>>(
+    []
+  );
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingChat, setLoadingChat] = useState<boolean>(false);
 
   const {
     setSelectedChat,
@@ -104,8 +107,9 @@ const SideDrawer = () => {
       };
       const { data } = await axios.post(`/api/chat`, { userId }, config);
 
-      if (!chats?.find((c) => c._id === data._id)) setChats([data, ...chats]);
-      setSelectedChat(data);
+      if (!chats?.find((c) => c._id === data._id))
+        setChats?.([data, ...(chats || [])]);
+      setSelectedChat?.(data);
       setLoadingChat(false);
       onClose();
     } catch (error: any) {
@@ -152,17 +156,19 @@ const SideDrawer = () => {
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && 'No New Messages'}
-              {notification.map((notif) => (
+              {notification.map((notif: any) => (
                 <MenuItem
                   key={notif._id}
                   onClick={() => {
-                    setSelectedChat(notif.chat);
-                    setNotification(notification.filter((n) => n !== notif));
+                    setSelectedChat?.(notif.chat);
+                    setNotification(
+                      notification.filter((n: any) => n !== notif)
+                    );
                   }}
                 >
                   {notif.chat.isGroupChat
                     ? `New Message in ${notif.chat.chatName}`
-                    : `New Message from ${getSender(user, notif.chat.users)}`}
+                    : `New Message from ${getSender(user!, notif.chat.users)}`}
                 </MenuItem>
               ))}
             </MenuList>
@@ -172,8 +178,8 @@ const SideDrawer = () => {
               <Avatar
                 size='sm'
                 cursor='pointer'
-                name={user.name}
-                src={user.pic}
+                name={user?.name}
+                src={user?.pic}
               />
             </MenuButton>
             <MenuList>

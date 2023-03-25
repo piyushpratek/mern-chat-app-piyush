@@ -6,8 +6,8 @@ export type ContextProps = {
   >;
   user: Partial<UserType>;
   setUser: React.Dispatch<React.SetStateAction<Partial<UserType> | undefined>>;
-  notification: unknown;
-  setNotification: unknown;
+  notification: any;
+  setNotification: any;
   chats: Array<ChatType>;
   setChats: React.Dispatch<React.SetStateAction<Array<ChatType> | undefined>>;
 };

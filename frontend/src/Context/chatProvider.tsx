@@ -10,8 +10,7 @@ const ChatProvider = ({ children }: any) => {
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState<Array<ChatType>>();
 
-  // fix this error later
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
