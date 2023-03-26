@@ -1,7 +1,14 @@
 import { Badge } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
+import { UserPublicType, UserType } from '../../types';
 
-const UserBadgeItem = ({ user, handleFunction, admin }) => {
+type UserBadgeItemType = {
+  user: UserPublicType;
+  handleFunction: Function;
+  admin: Partial<UserType>;
+};
+
+const UserBadgeItem = ({ user, handleFunction, admin }: UserBadgeItemType) => {
   return (
     <Badge
       px={2}
@@ -13,10 +20,10 @@ const UserBadgeItem = ({ user, handleFunction, admin }) => {
       fontSize={12}
       colorScheme='purple'
       cursor='pointer'
-      onClick={handleFunction}
+      onClick={handleFunction as any}
     >
       {user.name}
-      {admin === user._id && <span> (Admin)</span>}
+      {admin._id === user._id && <span> (Admin)</span>}
       <CloseIcon pl={1} />
     </Badge>
   );

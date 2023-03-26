@@ -16,21 +16,26 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { ChatState } from '../../Context/chatProvider';
+import { UserPublicType } from '../../types';
+import ChatLoading from '../chatLoading';
 import UserBadgeItem from '../userAvatar/userBadgeItem';
 import UserListItem from '../userAvatar/userListItem';
 
-const GroupChatModal = ({ children }) => {
+type GroupChatModalProps = {
+  children: React.ReactNode;
+};
+const GroupChatModal = ({ children }: GroupChatModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [groupChatName, setGroupChatName] = useState();
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [search, setSearch] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
+  const [groupChatName, setGroupChatName] = useState<string>(); // lets see below error now then..
+  const [selectedUsers, setSelectedUsers] = useState<Array<UserPublicType>>([]);
+  const [search, setSearch] = useState<string>('');
+  const [searchResult, setSearchResult] = useState<Array<UserPublicType>>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
   const { user, chats, setChats } = ChatState();
 
-  const handleGroup = (userToAdd) => {
+  const handleGroup = (userToAdd: UserPublicType) => {
     if (selectedUsers.includes(userToAdd)) {
       toast({
         title: 'User already added',
@@ -45,7 +50,7 @@ const GroupChatModal = ({ children }) => {
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (query: string) => {
     setSearch(query);
     if (!query) {
       return;
@@ -55,7 +60,7 @@ const GroupChatModal = ({ children }) => {
       setLoading(true);
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       };
       const { data } = await axios.get(`/api/user?search=${search}`, config);
@@ -74,7 +79,7 @@ const GroupChatModal = ({ children }) => {
     }
   };
 
-  const handleDelete = (delUser) => {
+  const handleDelete = (delUser: UserPublicType) => {
     setSelectedUsers(selectedUsers.filter((sel) => sel._id !== delUser._id));
   };
 
@@ -93,7 +98,7 @@ const GroupChatModal = ({ children }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       };
       const { data } = await axios.post(
@@ -104,7 +109,7 @@ const GroupChatModal = ({ children }) => {
         },
         config
       );
-      setChats([data, ...chats]);
+      setChats?.([data, ...(chats || [])]);
       onClose();
       toast({
         title: 'New Group Chat Created!',
@@ -113,7 +118,7 @@ const GroupChatModal = ({ children }) => {
         isClosable: true,
         position: 'bottom',
       });
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: 'Failed to Create the Chat!',
         description: error.response.data,
@@ -135,13 +140,13 @@ const GroupChatModal = ({ children }) => {
           <ModalHeader
             fontSize='35px'
             fontFamily='Work sans'
-            d='flex'
+            display='flex'
             justifyContent='center'
           >
             Create Group Chat
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody d='flex' flexDir='column' alignItems='center'>
+          <ModalBody display='flex' flexDir='column' alignItems='center'>
             <FormControl>
               <Input
                 placeholder='Chat Name'
@@ -156,12 +161,13 @@ const GroupChatModal = ({ children }) => {
                 onChange={(e) => handleSearch(e.target.value)}
               />
             </FormControl>
-            <Box w='100%' d='flex' flexWrap='wrap'>
+            <Box w='100%' display='flex' flexWrap='wrap'>
               {selectedUsers.map((u) => (
                 <UserBadgeItem
                   key={u._id}
                   user={u}
                   handleFunction={() => handleDelete(u)}
+                  admin={user!} // `user` (logged-in user) is the admin
                 />
               ))}
             </Box>
@@ -171,11 +177,11 @@ const GroupChatModal = ({ children }) => {
             ) : (
               searchResult
                 ?.slice(0, 4)
-                .map((user) => (
+                .map((u) => (
                   <UserListItem
-                    key={user._id}
-                    user={user}
-                    handleFunction={() => handleGroup(user)}
+                    key={u._id}
+                    user={u}
+                    handleFunction={() => handleGroup(u)}
                   />
                 ))
             )}

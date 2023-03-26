@@ -1,3 +1,4 @@
+import { ViewIcon } from '@chakra-ui/icons';
 import {
   Button,
   IconButton,
@@ -12,8 +13,13 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
+import { UserPublicType } from '../../types';
 
-const ProfileModal = ({ user, children }) => {
+type ProfileModalType = {
+  user: UserPublicType;
+  children: React.ReactNode;
+};
+const ProfileModal = ({ user, children }: ProfileModalType) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -21,7 +27,12 @@ const ProfileModal = ({ user, children }) => {
       {children ? (
         <span onClick={onOpen}>{children}</span>
       ) : (
-        <IconButton d={{ base: 'flex' }} icon={<ViewIcon />} onClick={onOpen} />
+        <IconButton
+          aria-label='cool'
+          display={{ base: 'flex' }}
+          icon={<ViewIcon />}
+          onClick={onOpen}
+        />
       )}
       <Modal size='lg' onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
