@@ -58,10 +58,16 @@ export const isSameUser = (
   return i > 0 && messages[i - 1].sender._id === m.sender._id;
 };
 
-export const getSender = (loggedUser: Partial<UserType>, users: UserType[]) => {
+export const getSender = (
+  loggedUser: Partial<UserType>,
+  users: UserPublicType[]
+) => {
   return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
 };
 
-export const getSenderFull = (loggedUser: { _id: any }, users: any[]) => {
+export const getSenderFull = (
+  loggedUser: Partial<UserType>,
+  users: UserPublicType[]
+) => {
   return users[0]._id === loggedUser._id ? users[1] : users[0];
 };

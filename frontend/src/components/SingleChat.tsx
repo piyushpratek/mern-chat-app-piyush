@@ -3,23 +3,28 @@ import { Input } from '@chakra-ui/input';
 import { Box, Text } from '@chakra-ui/layout';
 import './styles.css';
 import { IconButton, Spinner, useToast } from '@chakra-ui/react';
-import { getSender, getSenderFull } from '../config/ChatLogics';
+import { getSender, getSenderFull } from '../config/chatLogics';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import ProfileModal from './miscellaneous/ProfileModal';
 import ScrollableChat from './ScrollableChat';
-import Lottie from 'react-lottie';
+// import Lottie from 'react-lottie';
 import animationData from '../animations/typing.json';
 
 import io from 'socket.io-client';
-import UpdateGroupChatModal from './miscellaneous/UpdateGroupChatModal';
-import { ChatState } from '../Context/ChatProvider';
+import ProfileModal from './miscallaneous/profileModal';
+import UpdateGroupChatModal from './miscallaneous/updateGroupChat';
+import { ChatState } from '../Context/chatProvider';
 const ENDPOINT = 'http://localhost:5000'; // "https://talk-a-tive.herokuapp.com"; -> After deployment
-var socket, selectedChatCompare;
+var socket: any, selectedChatCompare: any;
 
-const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const [messages, setMessages] = useState([]);
+type SingleChatType = {
+  fetchAgain: boolean;
+  setFetchAgain: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
+  //  Todo-fixed by any for now
+  const [messages, setMessages] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState('');
   const [socketConnected, setSocketConnected] = useState(false);
@@ -44,7 +49,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
         },
       };
 
@@ -70,14 +75,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-  const sendMessage = async (event) => {
+  const sendMessage = async (event: any) => {
     if (event.key === 'Enter' && newMessage) {
-      socket.emit('stop typing', selectedChat._id);
+      socket.emit('stop typing', selectedChat?._id);
       try {
         const config = {
           headers: {
             'Content-type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         };
         setNewMessage('');
@@ -122,7 +127,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   }, [selectedChat]);
 
   useEffect(() => {
-    socket.on('message recieved', (newMessageRecieved) => {
+    socket.on('message recieved', (newMessageRecieved: any) => {
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
@@ -137,14 +142,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     });
   });
 
-  const typingHandler = (e) => {
+  const typingHandler = (e: any) => {
     setNewMessage(e.target.value);
 
     if (!socketConnected) return;
 
     if (!typing) {
       setTyping(true);
-      socket.emit('typing', selectedChat._id);
+      socket.emit('typing', selectedChat?._id);
     }
     let lastTypingTime = new Date().getTime();
     var timerLength = 3000;
@@ -152,7 +157,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
       if (timeDiff >= timerLength && typing) {
-        socket.emit('stop typing', selectedChat._id);
+        socket.emit('stop typing', selectedChat?._id);
         setTyping(false);
       }
     }, timerLength);
@@ -168,26 +173,31 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             px={2}
             w='100%'
             fontFamily='Work sans'
-            d='flex'
+            display='flex'
             justifyContent={{ base: 'space-between' }}
             alignItems='center'
           >
             <IconButton
-              d={{ base: 'flex', md: 'none' }}
+              display={{ base: 'flex', md: 'none' }}
               icon={<ArrowBackIcon />}
-              onClick={() => setSelectedChat('')}
+              //Todo-fixed by any for now
+              onClick={() => setSelectedChat?.('' as any)}
+              aria-label={''}
             />
             {messages &&
               (!selectedChat.isGroupChat ? (
                 <>
-                  {getSender(user, selectedChat.users)}
+                  {getSender(user!, selectedChat.users!)}
+
                   <ProfileModal
-                    user={getSenderFull(user, selectedChat.users)}
+                    user={getSenderFull(user!, selectedChat.users!)}
+                    //  Todo-fixed now by children={''}
+                    children={''}
                   />
                 </>
               ) : (
                 <>
-                  {selectedChat.chatName.toUpperCase()}
+                  {selectedChat?.chatName?.toUpperCase()}
                   <UpdateGroupChatModal
                     fetchMessages={fetchMessages}
                     fetchAgain={fetchAgain}
@@ -197,7 +207,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ))}
           </Text>
           <Box
-            d='flex'
+            display='flex'
             flexDir='column'
             justifyContent='flex-end'
             p={3}
@@ -229,12 +239,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             >
               {istyping ? (
                 <div>
-                  <Lottie
+                  // Todo-fix this later
+                  {/* <Lottie
                     options={defaultOptions}
                     // height={50}
                     width={70}
                     style={{ marginBottom: 15, marginLeft: 0 }}
-                  />
+                  /> */}
+                  Lottie
                 </div>
               ) : (
                 <></>
@@ -251,7 +263,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         </>
       ) : (
         // to get socket.io on same page
-        <Box d='flex' alignItems='center' justifyContent='center' h='100%'>
+        <Box
+          display='flex'
+          alignItems='center'
+          justifyContent='center'
+          h='100%'
+        >
           <Text fontSize='3xl' pb={3} fontFamily='Work sans'>
             Click on a user to start chatting
           </Text>
