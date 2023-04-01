@@ -48,7 +48,6 @@ const SideDrawer = () => {
     setChats,
   } = ChatState();
 
-  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
@@ -57,6 +56,7 @@ const SideDrawer = () => {
     navigate('/');
   };
 
+  const toast = useToast();
   const handleSearch = async () => {
     if (!search) {
       toast({
@@ -95,7 +95,7 @@ const SideDrawer = () => {
   };
 
   const accessChat = async (userId: any) => {
-    console.log(userId);
+    // console.log(userId);
 
     try {
       setLoadingChat(true);
@@ -105,7 +105,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user?.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post('/api/chat', { userId }, config);
 
       if (!chats?.find((c) => c._id === data._id))
         setChats?.([data, ...(chats || [])]);
@@ -183,7 +183,8 @@ const SideDrawer = () => {
               />
             </MenuButton>
             <MenuList>
-              <ProfileModal user={user}>
+              {/* //Todo user as any */}
+              <ProfileModal user={user as any}>
                 <MenuItem>My Profile</MenuItem>{' '}
               </ProfileModal>
               <MenuDivider />

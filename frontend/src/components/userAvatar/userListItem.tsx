@@ -1,4 +1,5 @@
 import { Avatar, Box, Text } from '@chakra-ui/react';
+import { ChatState } from '../../Context/chatProvider';
 import { UserPublicType } from '../../types';
 
 type UserListItemProps = {

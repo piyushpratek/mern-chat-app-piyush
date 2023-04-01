@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import { ChatState } from '../Context/chatProvider';
+import SingleChat from './SingleChat';
 
 type ChatBoxType = {
   fetchAgain: boolean;

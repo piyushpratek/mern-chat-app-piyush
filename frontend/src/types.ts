@@ -27,6 +27,7 @@ export type UserTypeAdditional = {
 export type UserPublicType = Omit<UserType & UserTypeAdditional, 'token'>;
 
 export type ChatType = {
+  latestMessage: JSX.Element;
   _id: string;
   chatName: string;
   isGroupChat: boolean;
