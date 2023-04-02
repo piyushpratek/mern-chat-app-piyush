@@ -13,14 +13,17 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Login from '../components/authentication/Login';
 import Signup from '../components/authentication/Signup';
+import { ChatState } from '../Context/chatProvider';
 
 const Homepage = () => {
+  const { setUser } = ChatState();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    const userData = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    setUser?.(userData);
 
-    if (user) navigate('/chats');
+    if (userData.token) navigate('/chats');
   }, [navigate]);
   return (
     <Container maxW='xl' centerContent>
