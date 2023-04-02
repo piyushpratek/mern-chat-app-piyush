@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getSender } from '../config/chatLogics';
 import { ChatState } from '../Context/chatProvider';
-import { UserType } from '../types';
+import { UserPublicType, UserType } from '../types';
 import ChatLoading from './chatLoading';
 import GroupChatModal from './miscallaneous/groupChatModal';
 
@@ -12,13 +12,12 @@ type MyChatsType = {
   fetchAgain: boolean;
 };
 const MyChats = ({ fetchAgain }: MyChatsType) => {
-  const [loggedUser, setLoggedUser] = useState<Partial<UserType>>();
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);
+    // console.log(user._id);`
     try {
       const config = {
         headers: {
@@ -39,12 +38,10 @@ const MyChats = ({ fetchAgain }: MyChatsType) => {
       });
     }
   };
-  //todo fix any
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem('userInfo') as any));
     fetchChats();
-    // eslint-disable-next-line
   }, [fetchAgain]);
+  // console.log('debugging:', { user, chats });
   return (
     <Box
       display={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
@@ -102,7 +99,7 @@ const MyChats = ({ fetchAgain }: MyChatsType) => {
               >
                 <Text>
                   {!chat.isGroupChat
-                    ? getSender(loggedUser!, chat.users)
+                    ? getSender(user as UserPublicType, chat.users)
                     : chat.chatName}
                 </Text>
                 {chat.latestMessage && (

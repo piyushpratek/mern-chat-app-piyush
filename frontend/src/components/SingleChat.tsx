@@ -1,7 +1,7 @@
 import { FormControl } from '@chakra-ui/form-control';
 import { Input } from '@chakra-ui/input';
 import { Box, Text } from '@chakra-ui/layout';
-// import './styles.css';
+import './style.css';
 import { IconButton, Spinner, useToast } from '@chakra-ui/react';
 import { getSender, getSenderFull } from '../config/chatLogics';
 import { useEffect, useState } from 'react';
@@ -25,11 +25,11 @@ type SingleChatType = {
 const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
   //  Todo-fixed by any for now
   const [messages, setMessages] = useState<any>([]);
-  const [loading, setLoading] = useState(false);
-  const [newMessage, setNewMessage] = useState('');
-  const [socketConnected, setSocketConnected] = useState(false);
-  const [typing, setTyping] = useState(false);
-  const [istyping, setIsTyping] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [newMessage, setNewMessage] = useState<string>('');
+  const [socketConnected, setSocketConnected] = useState<boolean>(false);
+  const [typing, setTyping] = useState<boolean>(false);
+  const [istyping, setIsTyping] = useState<boolean>(false);
   const toast = useToast();
 
   const defaultOptions = {
@@ -56,7 +56,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        '/api/message/${selectedChat._id}',
+        `/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -81,7 +81,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
       try {
         const config = {
           headers: {
-            'Content-type': 'application/json',
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${user?.token}`,
           },
         };
@@ -90,7 +90,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
           '/api/message',
           {
             content: newMessage,
-            chatId: selectedChat,
+            chatId: selectedChat?._id,
           },
           config
         );

@@ -11,13 +11,22 @@ import {
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ChatState } from '../../Context/chatProvider';
+
+const testingLogin = {
+  email: 'example@example.com',
+  password: '123456',
+};
 
 const Login = () => {
-  const [show, setShow] = useState<Boolean>(false);
-  const [email, setEmail] = useState<String | any>();
-  const [password, setPassword] = useState<String | any>();
-  const [loading, setLoading] = useState<Boolean | undefined | any>(false);
+  const [show, setShow] = useState<boolean>(false);
+  // TODO: remove `testingLogin` when app is deployed from `email` and `password` states
+  const [email, setEmail] = useState<string | any>(testingLogin.email);
+  const [password, setPassword] = useState<string | any>(testingLogin.password);
+  const [loading, setLoading] = useState<boolean | undefined | any>(false);
   const handleClick = () => setShow(!show);
+  const { setUser } = ChatState();
+
   const toast = useToast();
   const navigate = useNavigate();
   const submitHandler = async () => {
@@ -44,7 +53,6 @@ const Login = () => {
         { email, password },
         config
       );
-      console.log('JSON.stringify(data)?', JSON.stringify(data));
       toast({
         title: 'Login Succesful',
         status: 'success',
@@ -53,6 +61,8 @@ const Login = () => {
         position: 'bottom',
       });
       localStorage.setItem('userInfo', JSON.stringify(data));
+      // set user login details in `react-context`
+      setUser?.(data);
       setLoading(false);
       navigate('/chats');
     } catch (error: any) {

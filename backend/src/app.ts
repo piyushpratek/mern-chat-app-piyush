@@ -5,10 +5,11 @@ import chatRoutes from '../routes/chatRoutes';
 import userRoutes from '../routes/userRoutes';
 import messageRoutes from '../routes/messageRoutes';
 // const chats = require('../data/data'); //imported chats
-
+import cors from 'cors';
 const app: Application = express();
 
 app.use(express.json()); //to accept json data
+app.use(cors());
 app.get('/', (req, res) => {
   res.send('Api is Running');
 });
