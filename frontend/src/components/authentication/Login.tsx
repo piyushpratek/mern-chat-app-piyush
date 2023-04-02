@@ -41,7 +41,7 @@ const Login = () => {
       setLoading(false);
       return;
     }
-    console.log('email?,password?', email, password);
+    // console.log('email?,password?', email, password);
     try {
       const config = {
         headers: {

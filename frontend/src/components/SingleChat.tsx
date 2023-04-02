@@ -270,7 +270,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
           h='100%'
         >
           <Text fontSize='3xl' pb={3} fontFamily='Work sans'>
-            Click on a user to start chatting
+            Click on a chat to start chatting
           </Text>
         </Box>
       )}

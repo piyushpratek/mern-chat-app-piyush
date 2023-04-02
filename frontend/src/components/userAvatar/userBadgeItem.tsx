@@ -22,7 +22,7 @@ const UserBadgeItem = ({ user, handleFunction, admin }: UserBadgeItemType) => {
       cursor='pointer'
       onClick={handleFunction as any}
     >
-      {user.name}
+      {user.name} Hello
       {admin._id === user._id && <span> (Admin)</span>}
       <CloseIcon pl={1} />
     </Box>

@@ -63,8 +63,7 @@ const GroupChatModal = ({ children }: GroupChatModalProps) => {
           Authorization: `Bearer ${user?.token}`,
         },
       };
-      const { data } = await axios.get('/api/user?search=${search}', config);
-      console.log(data);
+      const { data } = await axios.get(`/api/user?search=${query}`, config);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -151,7 +150,7 @@ const GroupChatModal = ({ children }: GroupChatModalProps) => {
               <Input
                 placeholder='Chat Name'
                 mb={3}
-                onChange={(e) => setGroupChatName(e.target.value)}
+                onChange={(e) => setGroupChatName(e?.target.value)}
               />
             </FormControl>
             <FormControl>
