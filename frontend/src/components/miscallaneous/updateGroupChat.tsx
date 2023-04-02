@@ -35,10 +35,10 @@ const UpdateGroupChatModal = ({
 }: UpdateGroupChatModalType) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState<string>();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState<string>('');
   const [searchResult, setSearchResult] = useState<Array<UserPublicType>>([]);
-  const [loading, setLoading] = useState(false);
-  const [renameloading, setRenameLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [renameloading, setRenameLoading] = useState<boolean>(false);
   const toast = useToast();
 
   const { selectedChat, setSelectedChat, user } = ChatState();
@@ -56,7 +56,7 @@ const UpdateGroupChatModal = ({
           Authorization: `Bearer ${user?.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get('/api/user?search=${search}', config);
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -84,7 +84,7 @@ const UpdateGroupChatModal = ({
         },
       };
       const { data } = await axios.put(
-        `/api/chat/rename`,
+        '/api/chat/rename',
         {
           chatId: selectedChat?._id,
           chatName: groupChatName,
@@ -95,7 +95,7 @@ const UpdateGroupChatModal = ({
       console.log(data._id);
       // setSelectedChat("");
       setSelectedChat?.(data);
-      setFetchAgain(!fetchAgain); // yaa jahan se value pass ki hai iss component mei wahan se verify krlte hain...,! OK
+      setFetchAgain(!fetchAgain);
       setRenameLoading(false);
     } catch (error: any) {
       toast({
@@ -142,7 +142,7 @@ const UpdateGroupChatModal = ({
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupadd`,
+        '/api/chat/groupadd',
         {
           chatId: selectedChat?._id,
           userId: user1._id,
@@ -190,7 +190,7 @@ const UpdateGroupChatModal = ({
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupremove`,
+        '/api/chat/groupremove',
         {
           chatId: selectedChat?._id,
           userId: user1._id,
@@ -244,7 +244,7 @@ const UpdateGroupChatModal = ({
             <Box w='100%' display='flex' flexWrap='wrap' pb={3}>
               {selectedChat?.users?.map((u) => (
                 <UserBadgeItem
-                  key={u._id}
+                  key={user?._id}
                   user={u}
                   admin={selectedChat.groupAdmin!}
                   handleFunction={() => handleRemove(u)}

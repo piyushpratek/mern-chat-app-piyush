@@ -3,6 +3,7 @@ import { Application } from 'express';
 import { errorHandler, notFound } from '../middleware/errorMiddleware';
 import chatRoutes from '../routes/chatRoutes';
 import userRoutes from '../routes/userRoutes';
+import messageRoutes from '../routes/messageRoutes';
 // const chats = require('../data/data'); //imported chats
 
 const app: Application = express();
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/message', messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

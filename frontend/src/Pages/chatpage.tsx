@@ -8,7 +8,7 @@ import { ChatState } from '../Context/chatProvider';
 
 const Chatpage = () => {
   const { user } = ChatState();
-  const [fetchAgain, setFetchAgain] = useState<Boolean>(false);
+  const [fetchAgain, setFetchAgain] = useState<boolean>(false);
   return (
     <div style={{ width: '100%' }}>
       {user && <SideDrawer />}

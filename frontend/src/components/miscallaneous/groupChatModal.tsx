@@ -26,11 +26,11 @@ type GroupChatModalProps = {
 };
 const GroupChatModal = ({ children }: GroupChatModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [groupChatName, setGroupChatName] = useState<string>(); // lets see below error now then..
+  const [groupChatName, setGroupChatName] = useState<string>();
   const [selectedUsers, setSelectedUsers] = useState<Array<UserPublicType>>([]);
   const [search, setSearch] = useState<string>('');
   const [searchResult, setSearchResult] = useState<Array<UserPublicType>>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
 
   const { user, chats, setChats } = ChatState();
@@ -63,7 +63,7 @@ const GroupChatModal = ({ children }: GroupChatModalProps) => {
           Authorization: `Bearer ${user?.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get('/api/user?search=${search}', config);
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -102,7 +102,7 @@ const GroupChatModal = ({ children }: GroupChatModalProps) => {
         },
       };
       const { data } = await axios.post(
-        `/api/chat/group`,
+        '/api/chat/group',
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),
@@ -164,7 +164,7 @@ const GroupChatModal = ({ children }: GroupChatModalProps) => {
             <Box w='100%' display='flex' flexWrap='wrap'>
               {selectedUsers.map((u) => (
                 <UserBadgeItem
-                  key={u._id}
+                  key={user?._id}
                   user={u}
                   handleFunction={() => handleDelete(u)}
                   admin={user!} // `user` (logged-in user) is the admin
@@ -172,16 +172,18 @@ const GroupChatModal = ({ children }: GroupChatModalProps) => {
               ))}
             </Box>
             {loading ? (
-              // <ChatLoading />
-              <div>Loading...</div>
+              <>
+                <ChatLoading />
+                <div>Loading...</div>
+              </>
             ) : (
               searchResult
                 ?.slice(0, 4)
-                .map((u) => (
+                .map((user) => (
                   <UserListItem
-                    key={u._id}
-                    user={u}
-                    handleFunction={() => handleGroup(u)}
+                    key={user._id}
+                    user={user}
+                    handleFunction={() => handleGroup(user)}
                   />
                 ))
             )}
