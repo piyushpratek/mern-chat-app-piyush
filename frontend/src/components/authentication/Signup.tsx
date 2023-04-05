@@ -11,15 +11,23 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isDevelopm̥ent̥ } from '../../constants';
 
+const testingSignup = {
+  name: isDevelopm̥ent̥ ? 'example1' : '',
+  email: isDevelopm̥ent̥ ? 'example1@example.com' : '',
+  password: isDevelopm̥ent̥ ? '123456' : '',
+};
 const Signup = () => {
-  const [show, setShow] = useState<Boolean>(false);
-  const [name, setName] = useState<String>();
-  const [email, setEmail] = useState<String>();
-  const [password, setPassword] = useState<String>();
-  const [confirmpassword, setConfirmpassword] = useState<String>();
-  const [pic, setPic] = useState<String>();
-  const [loading, setLoading] = useState<Boolean | undefined | any>(false);
+  const [show, setShow] = useState<boolean>(false);
+  const [name, setName] = useState<string>(testingSignup.name);
+  const [email, setEmail] = useState<string>(testingSignup.email);
+  const [password, setPassword] = useState<string>(testingSignup.password);
+  const [confirmpassword, setConfirmpassword] = useState<string>(
+    testingSignup.password
+  );
+  const [pic, setPic] = useState<string>();
+  const [loading, setLoading] = useState<boolean | undefined | any>(false);
   const toast = useToast();
   const navigate = useNavigate();
   const handleClick = () => setShow(!show);
@@ -129,6 +137,7 @@ const Signup = () => {
       <FormControl id='first-name' isRequired>
         <FormLabel>Name</FormLabel>
         <Input
+          value={name}
           placeholder='Enter Your Name'
           onChange={(e) => setName(e.target.value)}
         />
@@ -136,6 +145,7 @@ const Signup = () => {
       <FormControl id='email' isRequired>
         <FormLabel>Email</FormLabel>
         <Input
+          value={email}
           placeholder='Enter Your Email'
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -145,6 +155,7 @@ const Signup = () => {
         <FormLabel>Password</FormLabel>
         <InputGroup>
           <Input
+            value={password}
             type={show ? 'text' : 'password'}
             placeholder='Enter Your Password'
             onChange={(e) => setPassword(e.target.value)}
@@ -161,6 +172,7 @@ const Signup = () => {
         <FormLabel>Confirm Password</FormLabel>
         <InputGroup size='md'>
           <Input
+            value={confirmpassword}
             type={show ? 'text' : 'password'}
             placeholder='Confirm Password'
             onChange={(e) => setConfirmpassword(e.target.value)}

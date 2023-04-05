@@ -20,10 +20,10 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('userInfo') || '{}');
-    setUser?.(userData);
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    setUser?.(userInfo);
 
-    if (userData.token) navigate('/chats');
+    if (userInfo.token) navigate('/chats');
   }, [navigate]);
   return (
     <Container maxW='xl' centerContent>

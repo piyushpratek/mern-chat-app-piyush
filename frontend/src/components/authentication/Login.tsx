@@ -12,15 +12,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ChatState } from '../../Context/chatProvider';
+import { isDevelopm̥ent̥ } from '../../constants';
 
 const testingLogin = {
-  email: 'example@example.com',
-  password: '123456',
+  email: isDevelopm̥ent̥ ? 'example1@example.com' : '',
+  password: isDevelopm̥ent̥ ? '123456' : '',
 };
 
 const Login = () => {
   const [show, setShow] = useState<boolean>(false);
   // TODO: remove `testingLogin` when app is deployed from `email` and `password` states
+
   const [email, setEmail] = useState<string | any>(testingLogin.email);
   const [password, setPassword] = useState<string | any>(testingLogin.password);
   const [loading, setLoading] = useState<boolean | undefined | any>(false);

@@ -14,7 +14,8 @@ export const sendMessage = asyncHandler(
 
     if (!content || !chatId) {
       logger.success('Invalid data passed into request');
-      return res.sendStatus(HttpStatus.BAD_REQUEST);
+      res.sendStatus(HttpStatus.BAD_REQUEST);
+      return;
     }
     var newMessage = {
       sender: req.user?._id,
@@ -25,10 +26,10 @@ export const sendMessage = asyncHandler(
       var message = await Message.create(newMessage);
       message = await message.populate('sender', 'name pic');
       message = await message.populate('chat');
-      message = await User.populate(message, {
+      message = (await User.populate(message, {
         path: 'chat.users',
         select: 'name pic email',
-      });
+      })) as any;
       await Chat.findByIdAndUpdate(req.body.chatId, {
         latestMessage: message,
       });
