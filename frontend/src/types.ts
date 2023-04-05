@@ -6,8 +6,8 @@ export type ContextProps = {
   >;
   user: Partial<UserType>;
   setUser: React.Dispatch<React.SetStateAction<Partial<UserType> | undefined>>;
-  notification: any;
-  setNotification: any;
+  notification: NotificationType[];
+  setNotification: React.Dispatch<React.SetStateAction<NotificationType[]>>;
   chats: Array<ChatType>;
   setChats: React.Dispatch<React.SetStateAction<Array<ChatType> | undefined>>;
 };
@@ -36,4 +36,9 @@ export type ChatType = {
   createdAt: string;
   updatedAt: string;
   __v: number;
+};
+
+export type NotificationType = {
+  _id: string;
+  chat: ChatType;
 };

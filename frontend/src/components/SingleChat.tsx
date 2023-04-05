@@ -130,8 +130,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
-        if (!notification.includes(newMessageRecieved)) {
-          setNotification([newMessageRecieved, ...notification]);
+        if (!notification?.includes(newMessageRecieved)) {
+          setNotification?.([newMessageRecieved, ...(notification || [])]);
           setFetchAgain(!fetchAgain);
         }
       } else {
@@ -175,34 +175,36 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
             justifyContent={{ base: 'space-between' }}
             alignItems='center'
           >
-            <IconButton
-              display={{ base: 'flex', md: 'none' }}
-              icon={<ArrowBackIcon />}
-              //Todo-fixed by any for now
-              onClick={() => setSelectedChat?.('' as any)}
-              aria-label={''}
-            />
-            {messages &&
-              (!selectedChat.isGroupChat ? (
-                <>
-                  {getSender(user!, selectedChat.users!)}
+            <>
+              <IconButton
+                display={{ base: 'flex', md: 'none' }}
+                icon={<ArrowBackIcon />}
+                //Todo-fixed by any for now
+                onClick={() => setSelectedChat?.('' as any)}
+                aria-label={''}
+              />
+              {messages &&
+                (!selectedChat.isGroupChat ? (
+                  <>
+                    {getSender(user!, selectedChat.users!)}
 
-                  <ProfileModal
-                    user={getSenderFull(user!, selectedChat.users!)}
-                    //  Todo-fixed now by children={''}
-                    children={''}
-                  />
-                </>
-              ) : (
-                <>
-                  {selectedChat?.chatName?.toUpperCase()}
-                  <UpdateGroupChatModal
-                    fetchMessages={fetchMessages}
-                    fetchAgain={fetchAgain}
-                    setFetchAgain={setFetchAgain}
-                  />
-                </>
-              ))}
+                    <ProfileModal
+                      user={getSenderFull(user!, selectedChat.users!)}
+                      //  Todo-fixed now by children={''}
+                      children={''}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {selectedChat?.chatName?.toUpperCase()}
+                    <UpdateGroupChatModal
+                      fetchMessages={fetchMessages}
+                      fetchAgain={fetchAgain}
+                      setFetchAgain={setFetchAgain}
+                    />
+                  </>
+                ))}
+            </>
           </Text>
           <Box
             display='flex'

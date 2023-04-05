@@ -124,8 +124,8 @@ const SideDrawer = () => {
     }
   };
 
-  const handleSearchKeyDown = (e) => {
-    if (event.key === 'Enter') {
+  const handleSearchKeyDown = (event: any) => {
+    if (event?.key === 'Enter') {
       handleSearch();
     }
   };
@@ -184,7 +184,7 @@ const SideDrawer = () => {
               <Avatar
                 size='sm'
                 cursor='pointer'
-                name={user?.name}
+                name={user?.name ?? ''}
                 src={user?.pic}
               />
             </MenuButton>

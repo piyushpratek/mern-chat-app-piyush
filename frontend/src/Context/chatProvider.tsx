@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChatType, ContextProps, UserType } from '../types';
+import { ChatType, ContextProps, NotificationType, UserType } from '../types';
 
 const ChatContext = createContext<Partial<ContextProps>>({});
 
@@ -8,7 +8,7 @@ const ChatProvider = ({ children }: any) => {
   const [user, setUser] = useState<Partial<UserType>>();
   const [selectedChat, setSelectedChat] = useState<Partial<ChatType>>();
   const [chats, setChats] = useState<Array<ChatType>>();
-  const [notification, setNotification] = useState([]);
+  const [notification, setNotification] = useState<Array<NotificationType>>([]);
 
   const navigate = useNavigate();
 
