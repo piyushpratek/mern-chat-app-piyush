@@ -1,4 +1,3 @@
-//Todo- update types for notification,setnotification
 export type ContextProps = {
   selectedChat: Partial<ChatType>;
   setSelectedChat: React.Dispatch<
@@ -27,7 +26,6 @@ export type UserTypeAdditional = {
 export type UserPublicType = Omit<UserType & UserTypeAdditional, 'token'>;
 
 export type ChatType = {
-  latestMessage: JSX.Element;
   _id: string;
   chatName: string;
   isGroupChat: boolean;
@@ -36,9 +34,37 @@ export type ChatType = {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  latestMessage: {
+    _id: string;
+    sender: UserPublicType;
+    content: string;
+    chat: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
 };
 
 export type NotificationType = {
   _id: string;
   chat: ChatType;
+};
+
+export type MessageType = {
+  _id: string;
+  sender: Omit<UserType, 'token'>;
+  content: string;
+  chat: {
+    _id: string;
+    chatName: string;
+    isGroupChat: boolean;
+    users: string[];
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+    latestMessage: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };

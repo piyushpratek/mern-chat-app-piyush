@@ -1,10 +1,10 @@
-import { UserPublicType, UserType } from '../types';
+import { MessageType, UserPublicType, UserType } from '../types';
 
 export const isSameSenderMargin = (
-  messages: string | any[],
-  m: { sender: { _id: any } },
+  messages: MessageType[],
+  m: MessageType,
   i: number,
-  userId: any
+  userId: string
 ) => {
   // console.log(i === messages.length - 1);
 
@@ -25,10 +25,10 @@ export const isSameSenderMargin = (
 };
 
 export const isSameSender = (
-  messages: string | any[],
-  m: { sender: { _id: any } },
+  messages: MessageType[],
+  m: MessageType,
   i: number,
-  userId: any
+  userId: string
 ) => {
   return (
     i < messages.length - 1 &&
@@ -41,7 +41,7 @@ export const isSameSender = (
 export const isLastMessage = (
   messages: string | any[],
   i: number,
-  userId: any
+  userId: string
 ) => {
   return (
     i === messages.length - 1 &&
@@ -51,8 +51,8 @@ export const isLastMessage = (
 };
 
 export const isSameUser = (
-  messages: { sender: { _id: any } }[],
-  m: { sender: { _id: any } },
+  messages: MessageType[],
+  m: MessageType,
   i: number
 ) => {
   return i > 0 && messages[i - 1].sender._id === m.sender._id;

@@ -21,7 +21,6 @@ const testingLogin = {
 
 const Login = () => {
   const [show, setShow] = useState<boolean>(false);
-  // TODO: remove `testingLogin` when app is deployed from `email` and `password` states
 
   const [email, setEmail] = useState<string | any>(testingLogin.email);
   const [password, setPassword] = useState<string | any>(testingLogin.password);
@@ -81,15 +80,16 @@ const Login = () => {
   };
   return (
     <VStack spacing='5px' color='black'>
-      <FormControl id='email' isRequired>
-        <FormLabel>Email</FormLabel>
-        <Input
-          placeholder='Enter Your Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
-
+      <>
+        <FormControl id='email' isRequired>
+          <FormLabel>Email</FormLabel>
+          <Input
+            placeholder='Enter Your Email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </FormControl>
+      </>
       <FormControl id='password' isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup size='md'>

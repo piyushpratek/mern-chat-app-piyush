@@ -15,6 +15,7 @@ import io from 'socket.io-client';
 import ProfileModal from './miscallaneous/profileModal';
 import UpdateGroupChatModal from './miscallaneous/updateGroupChat';
 import { ChatState } from '../Context/chatProvider';
+import { MessageType } from '../types';
 const ENDPOINT = 'http://localhost:5000'; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 var socket: any, selectedChatCompare: any;
 
@@ -23,8 +24,7 @@ type SingleChatType = {
   setFetchAgain: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
-  //  Todo-fixed by any for now
-  const [messages, setMessages] = useState<any>([]);
+  const [messages, setMessages] = useState<Array<MessageType>>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [newMessage, setNewMessage] = useState<string>('');
   const [socketConnected, setSocketConnected] = useState<boolean>(false);
@@ -32,6 +32,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
   const [istyping, setIsTyping] = useState<boolean>(false);
   const toast = useToast();
 
+  //lottie
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -121,7 +122,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
     fetchMessages();
 
     selectedChatCompare = selectedChat;
-    // eslint-disable-next-line
   }, [selectedChat]);
 
   useEffect(() => {
@@ -142,7 +142,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
 
   const typingHandler = (e: any) => {
     setNewMessage(e.target.value);
-
+    //typing indicator logic
     if (!socketConnected) return;
 
     if (!typing) {
@@ -175,36 +175,33 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: SingleChatType) => {
             justifyContent={{ base: 'space-between' }}
             alignItems='center'
           >
-            <>
-              <IconButton
-                display={{ base: 'flex', md: 'none' }}
-                icon={<ArrowBackIcon />}
-                //Todo-fixed by any for now
-                onClick={() => setSelectedChat?.('' as any)}
-                aria-label={''}
-              />
-              {messages &&
-                (!selectedChat.isGroupChat ? (
-                  <>
-                    {getSender(user!, selectedChat.users!)}
+            <IconButton
+              display={{ base: 'flex', md: 'none' }}
+              icon={<ArrowBackIcon />}
+              onClick={() => setSelectedChat?.(undefined)}
+              aria-label={''}
+            />
+            {messages &&
+              (!selectedChat.isGroupChat ? (
+                <>
+                  {getSender(user!, selectedChat.users!)}
 
-                    <ProfileModal
-                      user={getSenderFull(user!, selectedChat.users!)}
-                      //  Todo-fixed now by children={''}
-                      children={''}
-                    />
-                  </>
-                ) : (
-                  <>
-                    {selectedChat?.chatName?.toUpperCase()}
-                    <UpdateGroupChatModal
-                      fetchMessages={fetchMessages}
-                      fetchAgain={fetchAgain}
-                      setFetchAgain={setFetchAgain}
-                    />
-                  </>
-                ))}
-            </>
+                  <ProfileModal
+                    user={getSenderFull(user!, selectedChat.users!)}
+                    //  Todo-fixed now by children={''}
+                    children={<></>}
+                  />
+                </>
+              ) : (
+                <>
+                  {selectedChat?.chatName?.toUpperCase()}
+                  <UpdateGroupChatModal
+                    fetchMessages={fetchMessages}
+                    fetchAgain={fetchAgain}
+                    setFetchAgain={setFetchAgain}
+                  />
+                </>
+              ))}
           </Text>
           <Box
             display='flex'

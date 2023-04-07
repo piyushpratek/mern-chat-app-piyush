@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSender } from '../../config/chatLogics';
 import { ChatState } from '../../Context/chatProvider';
@@ -29,7 +29,7 @@ import ChatLoading from '../chatLoading';
 import ProfileModal from './profileModal';
 import UserListItem from '../userAvatar/userListItem';
 import BadgeText from '../BadgeText';
-import { UserType } from '../../types';
+import { UserPublicType, UserType } from '../../types';
 
 const SideDrawer = () => {
   const [search, setSearch] = useState<string>('');
@@ -156,18 +156,18 @@ const SideDrawer = () => {
           <Menu>
             <MenuButton p={1}>
               <BadgeText
-                count={notification.length}
+                count={notification?.length!}
                 label={<BellIcon fontSize='2xl' m={1} />}
               />
             </MenuButton>
             <MenuList pl={2}>
-              {!notification.length && 'No New Messages'}
-              {notification.map((notif: any) => (
+              {!notification?.length && 'No New Messages'}
+              {notification?.map((notif: any) => (
                 <MenuItem
                   key={notif._id}
                   onClick={() => {
                     setSelectedChat?.(notif.chat);
-                    setNotification(
+                    setNotification!(
                       notification.filter((n: any) => n !== notif)
                     );
                   }}
@@ -189,8 +189,7 @@ const SideDrawer = () => {
               />
             </MenuButton>
             <MenuList>
-              {/* //Todo user as any */}
-              <ProfileModal user={user as any}>
+              <ProfileModal user={user as UserPublicType}>
                 <MenuItem>My Profile</MenuItem>{' '}
               </ProfileModal>
               <MenuDivider />
