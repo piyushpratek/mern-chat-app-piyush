@@ -11,8 +11,8 @@ const server = app.listen(PORT, () => {
 const io = require('socket.io')(server, {
   pingTimeout: 60000,
   cors: {
-    // origin: '*', //  * is to diable all cors for all urls
-    origin: 'http://127.0.0.1:5173',
+    origin: '*', //  * is to diable all cors for all urls
+    // origin: 'http://127.0.0.1:5173', // To secure only local vite dev server.
   },
 });
 
