@@ -13,16 +13,16 @@ const UserBadgeItem = ({ user, handleFunction, admin }: UserBadgeItemType) => {
     <Box
       px={2}
       py={1}
+      // variant='solid'
       borderRadius='lg'
       m={1}
       mb={2}
       fontSize={12}
-      colorScheme='purple'
+      // colorScheme='purple'
       cursor='pointer'
-      variant='solid'
       onClick={handleFunction as any}
     >
-      {user.name} Hello
+      {user.name}
       {admin._id === user._id && <span> (Admin)</span>}
       <CloseIcon pl={1} />
     </Box>

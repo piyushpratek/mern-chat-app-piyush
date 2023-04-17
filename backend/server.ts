@@ -1,7 +1,6 @@
 import app from './src/app';
 import logger from './config/logger';
 import connectDB from './config/db';
-import { userInfo } from 'os';
 
 void connectDB.connect();
 const PORT = Number(process.env.PORT) ?? 5000;
