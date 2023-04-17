@@ -11,7 +11,12 @@ import cors from 'cors';
 const app: Application = express();
 
 app.use(express.json()); //to accept json data
-app.use(cors());
+app.use(
+  cors({
+    // Temporarilty disable cors for all hosts
+    origin: '*',
+  })
+);
 app.get('/api/health', (req, res) => {
   res.send('Api is Running');
 });
