@@ -1,1 +1,1 @@
-cd ../frontend && npm i && npm run build && cp -r dist ../backend/dist && cd ../backend && npm i && npm run build
+npm i && npm run build && cd ../frontend && npm i && npm run build && cp -r dist ../backend/react-static

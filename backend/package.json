@@ -7,7 +7,8 @@
     "start:prod": "cross-env NODE_ENV=production ts-node-dev --respawn --transpile-only --clear ./server.ts",
     "start:dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only --clear ./server.ts",
     "build": "tsc --build",
-    "start" : "node ./dist/server.js"
+    "start" : "node ./dist/server.js",
+    "start:local" : "cross-env NODE_ENV=development node ./dist/server.js"
   },
   "keywords": [],
   "author": "",

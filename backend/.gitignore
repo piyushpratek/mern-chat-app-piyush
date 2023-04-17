@@ -9,6 +9,9 @@ node_modules
 # dist
 /dist
 
+# react static build
+react-static
+
 # testing
 /coverage
 
