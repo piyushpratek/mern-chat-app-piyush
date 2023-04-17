@@ -31,12 +31,12 @@ export const protect = asyncHandler(
         req.user = user;
         next();
       } catch (error: any) {
-        res.status(HttpStatus.UNAUTHORIZED);
+        res.status(HttpStatus.UNAUTHORIZED).end();
         throw new Error('Not authorized,token failed');
       }
     }
     if (!token) {
-      res.status(HttpStatus.UNAUTHORIZED);
+      res.status(HttpStatus.UNAUTHORIZED).end();
       throw new Error('Not authorized,no token');
     }
   }

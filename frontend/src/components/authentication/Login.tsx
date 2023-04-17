@@ -9,7 +9,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ChatState } from '../../Context/chatProvider';
 import { isDevelopm̥ent̥ } from '../../constants';
@@ -67,8 +67,19 @@ const Login = () => {
       setLoading(false);
       navigate('/chats');
     } catch (error: any) {
+      // When 404 (NOT_FOUND) we need to show username/email not found.
+      // When 401 (UNAUTHORIZED) we need to show bad username or password.
+      let message = '';
+
+      if (error.response.status === 404) {
+        message = 'Email/Username not found.';
+      }
+      if (error.response.status === 401) {
+        message = 'Username and password do not match.';
+      }
+
       toast({
-        title: 'Error Occured!',
+        title: message ? message : 'Error Occured',
         description: error.response.data.message,
         status: 'error',
         duration: 5000,

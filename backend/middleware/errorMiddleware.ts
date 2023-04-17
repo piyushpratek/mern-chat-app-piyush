@@ -13,7 +13,7 @@ export const notFound = (
   next: NextFunction
 ): void => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
-  res.status(HttpStatus.NOT_FOUND);
+  res.status(HttpStatus.NOT_FOUND).end();
   next(error);
 };
 
@@ -27,7 +27,7 @@ export const errorHandler: ErrorRequestHandler = (
     res.statusCode === HttpStatus.OK
       ? HttpStatus.INTERNAL_SERVER_ERROR
       : res.statusCode;
-  res.status(statusCode);
+  res.status(statusCode).end();
   res.json({
     message: err.message,
     stack: NODE_ENV === 'production' ? null : err.stack,

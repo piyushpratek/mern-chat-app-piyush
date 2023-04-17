@@ -47,7 +47,7 @@ export const accessChat = asyncHandler(
         );
         res.status(HttpStatus.OK).send(FullChat);
       } catch (error: any) {
-        res.status(HttpStatus.BAD_REQUEST);
+        res.status(HttpStatus.BAD_REQUEST).end();
         throw new Error(error.message);
       }
     }
@@ -106,7 +106,7 @@ export const createGroupChat = asyncHandler(
 
       res.status(HttpStatus.OK).json(fullGroupChat);
     } catch (error: any) {
-      res.status(HttpStatus.BAD_REQUEST);
+      res.status(HttpStatus.BAD_REQUEST).end();
       throw new Error(error.message);
     }
   }
@@ -129,7 +129,7 @@ export const renameGroup = asyncHandler(
       .populate('groupAdmin', '-password');
 
     if (!updatedChat) {
-      res.status(HttpStatus.NOT_FOUND);
+      res.status(HttpStatus.NOT_FOUND).end();
       throw new Error('Chat Not Found');
     } else {
       res.json(updatedChat);
@@ -156,7 +156,7 @@ export const addToGroup = asyncHandler(
       .populate('groupAdmin', '-password');
 
     if (!added) {
-      res.status(HttpStatus.NOT_FOUND);
+      res.status(HttpStatus.NOT_FOUND).end();
       throw new Error('Chat Not Found');
     } else {
       res.json(added);
@@ -183,7 +183,7 @@ export const removeFromGroup = asyncHandler(
       .populate('groupAdmin', '-password');
 
     if (!removed) {
-      res.status(HttpStatus.NOT_FOUND);
+      res.status(HttpStatus.NOT_FOUND).end();
       throw new Error('Chat Not Found');
     } else {
       res.json(removed);
