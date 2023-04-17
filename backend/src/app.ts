@@ -20,7 +20,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/message', messageRoutes);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && process.env.VITE !== 'false') {
   const reactBuildPath = path.join('./react-static');
   const staticMiddleware = express.static(reactBuildPath);
   app.use(staticMiddleware);
@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use('/assets', express.static(assetsPath));
 }
 
+// TODO: Urgent and critical
 // TODO-SAHIL: Check if below middlewares are running along with new static file serving middlewares.
 app.use(notFound);
 app.use(errorHandler);

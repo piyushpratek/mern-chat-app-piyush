@@ -5,7 +5,8 @@ import connectDB from './config/db';
 void connectDB.connect();
 const PORT = Number(process.env.PORT) ?? 5000;
 const server = app.listen(PORT, () => {
-  logger.success(`SERVER STARTED ON PORT ${PORT} `);
+  logger.success(`SERVER STARTED ON PORT ${PORT}`);
+  logger.success(`HEALTH: http://localhost:${PORT}/api/health \n`);
 });
 
 const io = require('socket.io')(server, {
