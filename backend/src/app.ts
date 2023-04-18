@@ -1,6 +1,6 @@
 import express from 'express';
 import { Application } from 'express';
-import { errorHandler, notFound } from '../middleware/errorMiddleware';
+import { errorHandler } from '../middleware/errorMiddleware';
 import chatRoutes from '../routes/chatRoutes';
 import userRoutes from '../routes/userRoutes';
 import messageRoutes from '../routes/messageRoutes';
@@ -30,9 +30,6 @@ if (process.env.NODE_ENV === 'production' && process.env.VITE !== 'false') {
   app.use('/assets', express.static(assetsPath));
 }
 
-// TODO: Urgent and critical
-// TODO-SAHIL: Check if below middlewares are running along with new static file serving middlewares.
-app.use(notFound);
 app.use(errorHandler);
 
 export default app;

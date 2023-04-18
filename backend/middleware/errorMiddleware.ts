@@ -7,26 +7,20 @@ import type {
 import { NODE_ENV } from '../config/config';
 import { HttpStatus } from '../http-status.enum';
 
-export const notFound = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void => {
-  const error = new Error(`Not Found - ${req.originalUrl}`);
-  res.status(HttpStatus.NOT_FOUND).end();
-  next(error);
-};
-
 export const errorHandler: ErrorRequestHandler = (
   err: Error,
   req,
   res: Response,
   next
 ): void => {
+  console.log('---Error Handler Middleware--:');
+  console.log({ name: err.name, message: err.message });
+  console.log('---Error Stack---', err.stack, '\n\n');
   const statusCode =
     res.statusCode === HttpStatus.OK
       ? HttpStatus.INTERNAL_SERVER_ERROR
       : res.statusCode;
+  //handle any other error
   res.status(statusCode).end();
   res.json({
     message: err.message,
