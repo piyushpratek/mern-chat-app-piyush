@@ -57,7 +57,6 @@ const UpdateGroupChatModal = ({
         },
       };
       const { data } = await axios.get('/api/user?search=${search}', config);
-      console.log(data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -92,7 +91,6 @@ const UpdateGroupChatModal = ({
         config
       );
 
-      console.log(data._id);
       // setSelectedChat("");
       setSelectedChat?.(data);
       setFetchAgain(!fetchAgain);

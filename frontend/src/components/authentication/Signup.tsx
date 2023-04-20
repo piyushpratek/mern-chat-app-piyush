@@ -56,11 +56,9 @@ const Signup = () => {
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
-          console.log('data.url.toString() ?', data.url.toString());
           setLoading(false);
         })
         .catch((err) => {
-          console.log('err ?', err);
           setLoading(false);
         });
     } else {

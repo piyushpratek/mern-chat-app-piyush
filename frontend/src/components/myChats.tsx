@@ -17,7 +17,6 @@ const MyChats = ({ fetchAgain }: MyChatsType) => {
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);`
     try {
       const config = {
         headers: {
@@ -26,7 +25,6 @@ const MyChats = ({ fetchAgain }: MyChatsType) => {
       };
 
       const { data } = await axios.get('/api/chat', config);
-      // console.log('data?', data);
 
       setChats?.(data);
     } catch (error) {
@@ -43,7 +41,6 @@ const MyChats = ({ fetchAgain }: MyChatsType) => {
   useEffect(() => {
     fetchChats();
   }, [fetchAgain]);
-  // console.log('debugging:', { user, chats });
   return (
     <Box
       display={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
