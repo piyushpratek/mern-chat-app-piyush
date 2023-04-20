@@ -6,13 +6,15 @@ https://chat-rlbn.onrender.com
 
 ## Deployment @ Render
 
-1. Root Directory: `backend`
+- Root Directory: `backend`
 
-2. Build command:
+- Build command:
 
 ```
 npm i && npm run build && cd ../frontend && npm i && npm run build && cp -r dist ../backend/react-static
 ```
+
+- NOTE- Automatic deployments via git are only triggered for root directory i.e **backend**. (changes in frontend folder will not trigger deployment)
 
 ## Source
 
