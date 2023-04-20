@@ -72,7 +72,7 @@ const Login = () => {
       let message = '';
 
       if (error.response.status === 404) {
-        message = 'Email/Username not found.';
+        message = 'Email/Username not found. Please SignUp first !';
       }
       if (error.response.status === 401) {
         message = 'Username and password do not match.';
