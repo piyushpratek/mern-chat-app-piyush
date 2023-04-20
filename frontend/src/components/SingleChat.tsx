@@ -16,7 +16,10 @@ import ProfileModal from './miscallaneous/profileModal';
 import UpdateGroupChatModal from './miscallaneous/updateGroupChat';
 import { ChatState } from '../Context/chatProvider';
 import { MessageType } from '../types';
-const ENDPOINT = 'http://localhost:5000'; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+// const ENDPOINT = 'http://localhost:5000'; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+const isHttpSecure = window.location.href.startsWith('https://');
+const protocol = isHttpSecure ? 'wss' : 'ws';
+const ENDPOINT = `${protocol}://${window.location.host}`;
 var socket: any, selectedChatCompare: any;
 
 type SingleChatType = {
