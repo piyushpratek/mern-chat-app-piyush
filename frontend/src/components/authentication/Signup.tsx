@@ -12,6 +12,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isDevelopm̥ent̥ } from '../../constants';
+import { ChatState } from '../../Context/chatProvider';
 
 export const GUEST_CREADENTIALS = {
   name: 'Guest 1',
@@ -30,6 +31,7 @@ const Signup = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const handleClick = () => setShow(!show);
+  const { setUser } = ChatState();
 
   const postDetails = (pics: File) => {
     setLoading(true);
@@ -123,6 +125,7 @@ const Signup = () => {
       });
       localStorage.setItem('userInfo', JSON.stringify(data));
       setLoading(false);
+      setUser?.(data);
       navigate('/chats');
     } catch (error: any) {
       toast({
