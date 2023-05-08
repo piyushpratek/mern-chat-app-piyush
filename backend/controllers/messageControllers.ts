@@ -35,7 +35,7 @@ export const sendMessage = asyncHandler(
       });
       res.json(message);
     } catch (error: any) {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error(error.message);
     }
   }
@@ -50,7 +50,7 @@ export const allMessage = asyncHandler(
 
       res.json(messages);
     } catch (error: any) {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error(error.message);
     }
   }

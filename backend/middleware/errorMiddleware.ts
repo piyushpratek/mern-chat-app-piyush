@@ -21,8 +21,7 @@ export const errorHandler: ErrorRequestHandler = (
       ? HttpStatus.INTERNAL_SERVER_ERROR
       : res.statusCode;
   //handle any other error
-  res.status(statusCode).end();
-  res.json({
+  res.status(statusCode).json({
     message: err.message,
     stack: NODE_ENV === 'production' ? null : err.stack,
   });

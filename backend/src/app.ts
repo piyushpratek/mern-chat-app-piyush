@@ -19,6 +19,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/message', messageRoutes);
+app.use('/api/*', errorHandler);
 
 if (process.env.USE_STATIC_BUILD === 'true') {
   const reactBuildPath = path.join('./react-static');
@@ -34,7 +35,5 @@ if (process.env.USE_STATIC_BUILD === 'true') {
     res.redirect('/api/health');
   });
 }
-
-app.use(errorHandler);
 
 export default app;

@@ -10,16 +10,14 @@ export const registerUser = asyncHandler(
     const { name, email, password, pic } = req.body as UserType;
 
     if (!name || !email || !password) {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error('Please Enter all the fields');
     }
 
     const userExits = await User.findOne({ email });
 
     if (userExits) {
-      res.status(HttpStatus.BAD_REQUEST).json({
-        message: 'User Already Exists!',
-      });
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error('User Already Exits');
     }
 
@@ -39,7 +37,7 @@ export const registerUser = asyncHandler(
         token: generateToken(user._id.toString()),
       });
     } else {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(HttpStatus.BAD_REQUEST);
       throw new Error('Failed To Create the User');
     }
   }
@@ -50,7 +48,7 @@ export const authUser = asyncHandler(
     const { email, password } = req.body;
     const user: UserType | null = await User.findOne({ email });
     if (!user) {
-      res.status(HttpStatus.NOT_FOUND).end();
+      res.status(HttpStatus.NOT_FOUND).end(); //necessary to call .end() bcoz we r not throwing any error
       return;
     }
     if (user && (await user.matchPassword(password))) {
@@ -62,7 +60,7 @@ export const authUser = asyncHandler(
         token: generateToken(user._id.toString()),
       });
     } else {
-      res.status(HttpStatus.UNAUTHORIZED).end();
+      res.status(HttpStatus.UNAUTHORIZED);
       throw new Error('Invalid Email or Password');
     }
   }
