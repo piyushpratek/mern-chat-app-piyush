@@ -17,7 +17,9 @@ export const registerUser = asyncHandler(
     const userExits = await User.findOne({ email });
 
     if (userExits) {
-      res.status(HttpStatus.BAD_REQUEST).end();
+      res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'User Already Exists!',
+      });
       throw new Error('User Already Exits');
     }
 
