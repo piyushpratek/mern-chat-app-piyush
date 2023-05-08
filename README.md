@@ -16,6 +16,8 @@ npm i && npm run build && cd ../frontend && npm i && npm run build && cp -r dist
 
 - NOTE- Automatic deployments via git are only triggered for root directory i.e **backend**. (changes in frontend folder will not trigger deployment)
 
+-NOTE- Make sure to add Environment Varibles ->JWT_SECRET , MONGO_URI , and USE_STATIC_BUILD
+
 ## Source
 
 Tutorial: [Click here](https://youtu.be/fH8VIb8exdA?list=PLKhlp2qtUcSZsGkxAdgnPcHioRr-4guZf&t=727)
