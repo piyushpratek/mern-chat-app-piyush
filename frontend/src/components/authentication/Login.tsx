@@ -14,16 +14,11 @@ import { useNavigate } from 'react-router-dom';
 import { ChatState } from '../../Context/chatProvider';
 import { isDevelopm̥ent̥ } from '../../constants';
 
-const testingLogin = {
-  email: isDevelopm̥ent̥ ? 'example1@example.com' : '',
-  password: isDevelopm̥ent̥ ? '123456' : '',
-};
-
 const Login = () => {
   const [show, setShow] = useState<boolean>(false);
 
-  const [email, setEmail] = useState<string | any>(testingLogin.email);
-  const [password, setPassword] = useState<string | any>(testingLogin.password);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean | undefined | any>(false);
   const handleClick = () => setShow(!show);
   const { setUser } = ChatState();

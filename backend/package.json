@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=development VITE=false ts-node-dev --respawn --transpile-only --clear ./server.ts",
-    "start:prod": "cross-env NODE_ENV=production VITE=false ts-node-dev --respawn --transpile-only --clear ./server.ts",
+    "start:dev": "cross-env NODE_ENV=development USE_STATIC_BUILD=false ts-node-dev --respawn --transpile-only --clear ./server.ts",
+    "start:prod": "cross-env NODE_ENV=production USE_STATIC_BUILD=false ts-node-dev --respawn --transpile-only --clear ./server.ts",
     "build": "tsc --build",
     "start" : "node ./dist/server.js",
-    "start:dev-static" : "cross-env NODE_ENV=development node ./dist/server.js",
-    "start:prod-static" : "cross-env NODE_ENV=production node ./dist/server.js"
+    "start:dev-static" : "cross-env NODE_ENV=development USE_STATIC_BUILD=true node ./dist/server.js",
+    "start:prod-static" : "cross-env NODE_ENV=production USE_STATIC_BUILD=true node ./dist/server.js"
   },
   "keywords": [],
   "author": "",

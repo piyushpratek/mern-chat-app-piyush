@@ -13,19 +13,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isDevelopm̥ent̥ } from '../../constants';
 
-const testingSignup = {
-  name: isDevelopm̥ent̥ ? 'example1' : '',
-  email: isDevelopm̥ent̥ ? 'example1@example.com' : '',
-  password: isDevelopm̥ent̥ ? '123456' : '',
+export const GUEST_CREADENTIALS = {
+  name: 'Guest 1',
+  email: 'guest1@guest.com',
+  password: '123456',
 };
+
 const Signup = () => {
   const [show, setShow] = useState<boolean>(false);
-  const [name, setName] = useState<string>(testingSignup.name);
-  const [email, setEmail] = useState<string>(testingSignup.email);
-  const [password, setPassword] = useState<string>(testingSignup.password);
-  const [confirmpassword, setConfirmpassword] = useState<string>(
-    testingSignup.password
-  );
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmpassword, setConfirmpassword] = useState<string>('');
   const [pic, setPic] = useState<string>();
   const [loading, setLoading] = useState<boolean | undefined | any>(false);
   const toast = useToast();
@@ -72,6 +71,13 @@ const Signup = () => {
       setLoading(false);
       return;
     }
+  };
+
+  const handleGuestCredentials = () => {
+    setEmail(GUEST_CREADENTIALS.email);
+    setName(GUEST_CREADENTIALS.name);
+    setPassword(GUEST_CREADENTIALS.password);
+    setConfirmpassword(GUEST_CREADENTIALS.password);
   };
 
   const submitHandler = async () => {
@@ -200,6 +206,16 @@ const Signup = () => {
         isLoading={loading}
       >
         Sign Up
+      </Button>
+
+      <Button
+        colorScheme='red'
+        width='100%'
+        style={{ margin: 15 }}
+        onClick={handleGuestCredentials}
+        isLoading={loading}
+      >
+        Get Guest User Credentials
       </Button>
     </VStack>
   );
