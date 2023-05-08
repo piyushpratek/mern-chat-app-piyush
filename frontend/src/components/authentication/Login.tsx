@@ -13,6 +13,7 @@ import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ChatState } from '../../Context/chatProvider';
 import { isDevelopm̥ent̥ } from '../../constants';
+import { GUEST_CREADENTIALS } from './Signup';
 
 const Login = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -128,8 +129,8 @@ const Login = () => {
         width='100%'
         color='white'
         onClick={() => {
-          setEmail('guest@example.com');
-          setPassword('123456');
+          setEmail(GUEST_CREADENTIALS.email);
+          setPassword(GUEST_CREADENTIALS.password);
         }}
       >
         Get Guest User Credentials
