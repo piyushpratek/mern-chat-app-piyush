@@ -6,7 +6,7 @@ export interface RequestAuth extends Request {
   user?: UserType;
 }
 
-export interface CustomRequest<T> extends Request {
+export interface CustomRequest<T = any> extends Request {
   user?: UserType;
   body: T;
 }
